@@ -18,6 +18,11 @@ test:
   commands:
     - unzip -h
 
+requirements:
+  build:
+    - make
+    - {{ compiler('c') }}
+
 about:
   home: http://www.info-zip.org/
   license: BSD-like
