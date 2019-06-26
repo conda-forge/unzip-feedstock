@@ -12,7 +12,10 @@ source:
 build:
   number: 0
   skip: True  # [win]
-  script: make -f unix/Makefile generic && mv unzip $PREFIX/bin
+  script:
+   - make CC=$CC -f unix/Makefile generic
+   - mkdir $PREFIX/bin
+   - mv unzip $PREFIX/bin
 
 requirements:
   build:
