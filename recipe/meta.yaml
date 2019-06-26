@@ -1,5 +1,5 @@
-{% set version="6.0" %}
-{% set sha256="036d96991646d0449ed0aa952e4fbe21b476ce994abc276e49d30e686708bd37"  %}
+{% set version = "6.0" %}
+{% set sha256 = "036d96991646d0449ed0aa952e4fbe21b476ce994abc276e49d30e686708bd37" %}
 
 package:
   name: unzip
@@ -12,7 +12,15 @@ source:
 build:
   number: 0
   skip: True  # [win]
-  script: make -f unix/Makefile generic && mv unzip $PREFIX/bin
+  script:
+   - make CC=$CC -f unix/Makefile generic
+   - mkdir $PREFIX/bin
+   - mv unzip $PREFIX/bin
+
+requirements:
+  build:
+    - "{{ compiler('c') }}"
+    - make
 
 test:
   commands:
