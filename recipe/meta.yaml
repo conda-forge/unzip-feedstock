@@ -13,7 +13,7 @@ build:
   number: 0
   skip: True  # [win]
   script:
-   - make CC=$CC -f unix/Makefile generic
+   - make CC=$CC -DNO_LCHMOD -f unix/Makefile generic
    - mkdir $PREFIX/bin
    - mv unzip $PREFIX/bin
 
@@ -21,6 +21,8 @@ requirements:
   build:
     - "{{ compiler('c') }}"
     - make
+  host:
+    - bzip2
 
 test:
   commands:
