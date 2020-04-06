@@ -13,15 +13,17 @@ build:
   number: 0
   skip: True  # [win]
   script:
-   - make CC=$CC D_USE_BZ2=-DUSE_BZIP2 IZ_BZIP2=$PREFIX/lib L_BZ2=-lbz2 prefix="$PREFIX" CF="$CFLAGS -DNO_LCHMOD -I. -DUSE_BZIP2" LFLAGS1="$LDFLAGS" -f unix/Makefile generic
+   # Can't build with bzip2 support due to:
+   # > A bzip2 library built with BZ_NO_STDIO should have an
+   # > unresolved external, "bz_internal_error".  The default,
+   # > full-function library will not mention it.
+   - make CC=$CC prefix="$PREFIX" CF="$CFLAGS -DNO_LCHMOD -I." LFLAGS1="$LDFLAGS" -f unix/Makefile generic
    - make prefix="$PREFIX" -f unix/Makefile install
 
 requirements:
   build:
     - "{{ compiler('c') }}"
     - make
-  host:
-    - bzip2
 
 test:
   commands:
