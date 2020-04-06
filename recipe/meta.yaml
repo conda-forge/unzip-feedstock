@@ -13,7 +13,7 @@ build:
   number: 0
   skip: True  # [win]
   script:
-   - make CC=$CC CF="$CFLAGS $CPPFLAGS -DNO_LCHMOD" -f unix/Makefile generic
+   - make CC=$CC D_USE_BZ2=-DUSE_BZIP2 CF="$CFLAGS $CPPFLAGS -DNO_LCHMOD -DUSE_BZIP2" -f unix/Makefile generic
    - mkdir -p $PREFIX/bin
    - mv unzip $PREFIX/bin
 
