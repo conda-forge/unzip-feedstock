@@ -13,7 +13,7 @@ build:
   number: 0
   skip: True  # [win]
   script:
-   - make CC=$CC D_USE_BZ2=-DUSE_BZIP2 L_BZ2=-lbz2 prefix="$PREFIX" CF="$CFLAGS -DNO_LCHMOD -I. -DUSE_BZIP2" LFLAGS1="$LDFLAGS" -f unix/Makefile unzips
+   - make CC=$CC D_USE_BZ2=-DUSE_BZIP2 L_BZ2=-lbz2 prefix="$PREFIX" CF="$CFLAGS -DNO_LCHMOD -I. -DUSE_BZIP2" LFLAGS1="$LDFLAGS" -f unix/Makefile generic
    - make prefix="$PREFIX" -f unix/Makefile install
 
 requirements:
