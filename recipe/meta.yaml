@@ -10,12 +10,15 @@ source:
   sha256: {{ sha256 }}
 
 build:
-  number: 0
+  number: 1
   skip: True  # [win]
   script:
-   - make CC=$CC -f unix/Makefile generic
-   - mkdir $PREFIX/bin
-   - mv unzip $PREFIX/bin
+   # Can't build with bzip2 support due to:
+   # > A bzip2 library built with BZ_NO_STDIO should have an
+   # > unresolved external, "bz_internal_error".  The default,
+   # > full-function library will not mention it.
+   - make CC=$CC prefix="$PREFIX" CF="$CFLAGS -DNO_LCHMOD -I." LFLAGS1="$LDFLAGS" -f unix/Makefile generic
+   - make prefix="$PREFIX" -f unix/Makefile install
 
 requirements:
   build:
@@ -25,14 +28,16 @@ requirements:
 test:
   commands:
     - unzip -h
+    - zipinfo -h
 
 about:
   home: http://www.info-zip.org/
-  license: BSD-like
+  license: LicenseRef-BSD-like
   license_file: LICENSE
   summary: simple program for unzipping files
 
 extra:
   recipe-maintainers:
+    - chrisburr
     - msarahan
     - jerowe
