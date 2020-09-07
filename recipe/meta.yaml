@@ -30,7 +30,7 @@ test:
     - unzip -h
     - zipinfo -h
     # Ensure lchmod is not being used by the binary
-    - rc=$(strings $(which unzip) | grep -ci lchmod); [ $rc -eq 0 ]
+    - "rc=$(strings $(which unzip) | grep -ci lchmod); [ $rc -eq 0 ]"
 
 about:
   home: http://www.info-zip.org/
