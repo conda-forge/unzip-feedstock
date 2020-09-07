@@ -10,14 +10,15 @@ source:
   sha256: {{ sha256 }}
 
 build:
-  number: 1
+  number: 2
   skip: True  # [win]
   script:
    # Can't build with bzip2 support due to:
    # > A bzip2 library built with BZ_NO_STDIO should have an
    # > unresolved external, "bz_internal_error".  The default,
    # > full-function library will not mention it.
-   - make CC=$CC prefix="$PREFIX" CF="$CFLAGS -DNO_LCHMOD -I." LFLAGS1="$LDFLAGS" -f unix/Makefile generic
+   - make -f unix/Makefile CC=$CC prefix="$PREFIX" CF="$CFLAGS -I." LFLAGS1="$LDFLAGS" generic  # [osx]
+   - make -f unix/Makefile CC=$CC prefix="$PREFIX" CF="$CFLAGS -I. -DNO_LCHMOD" LFLAGS1="$LDFLAGS" unzips  # [linux]
    - make prefix="$PREFIX" -f unix/Makefile install
 
 requirements:
@@ -29,6 +30,8 @@ test:
   commands:
     - unzip -h
     - zipinfo -h
+    # Ensure lchmod is not being used by the binary
+    - test "$(strings $(which unzip) | grep -ci lchmod)" -eq 0  # [linux]
 
 about:
   home: http://www.info-zip.org/
