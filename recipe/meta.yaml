@@ -31,7 +31,7 @@ test:
     - unzip -h
     - zipinfo -h
     # Ensure lchmod is not being used by the binary
-    - test "$(strings $(which unzip) | grep -ci lchmod)" -eq 0
+    - test "$(strings $(which unzip) | grep -ci lchmod)" -eq 0  # [linux]
 
 about:
   home: http://www.info-zip.org/
