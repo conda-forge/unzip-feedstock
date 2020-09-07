@@ -17,7 +17,7 @@ build:
    # > A bzip2 library built with BZ_NO_STDIO should have an
    # > unresolved external, "bz_internal_error".  The default,
    # > full-function library will not mention it.
-   - make CC=$CC prefix="$PREFIX" CF="$CFLAGS -I. -DNO_LCHMOD" LFLAGS1="$LDFLAGS" -f unix/Makefile generic
+   - make -f unix/Makefile CC=$CC prefix="$PREFIX" CF="$CFLAGS -I. -DNO_LCHMOD" LFLAGS1="$LDFLAGS" unzips
    - make prefix="$PREFIX" -f unix/Makefile install
 
 requirements:
