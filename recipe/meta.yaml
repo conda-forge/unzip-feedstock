@@ -18,7 +18,9 @@ build:
    # > full-function library will not mention it.
    - make -f unix/Makefile CC=$CC prefix="$PREFIX" CF="$CFLAGS -I." LFLAGS1="$LDFLAGS" generic  # [osx]
    - make -f unix/Makefile CC=$CC prefix="$PREFIX" CF="$CFLAGS -I. -DNO_LCHMOD" LFLAGS1="$LDFLAGS" unzips  # [linux]
-   - make prefix="$PREFIX" -f unix/Makefile install
+   - make prefix="$PREFIX" -f unix/Makefile install  # [unix]
+   - make -f win32/Makefile CC=$CC prefix="$PREFIX" CF="$CFLAGS -I." LFLAGS1="$LDFLAGS"  # [win]
+   - xcopy /y /s *.exe *.dll %LIBRARY_BIN%  # [win]
 
 requirements:
   build:
