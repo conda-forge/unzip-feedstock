@@ -10,8 +10,7 @@ source:
   sha256: {{ sha256 }}
 
 build:
-  number: 2
-  skip: True  # [win]
+  number: 3
   script:
    # Can't build with bzip2 support due to:
    # > A bzip2 library built with BZ_NO_STDIO should have an
