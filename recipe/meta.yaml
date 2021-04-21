@@ -10,7 +10,6 @@ source:
   sha256: {{ sha256 }}
   patches:
    - avoid_cr.patch  # [win]
-   - include_winnt.patch  # [win]
 
 build:
   number: 3
