@@ -1,0 +1,54 @@
+diff -ruN unzip60_old/fileio.c unzip60_fixed/fileio.c
+--- unzip60_old/fileio.c	2021-04-21 15:21:49.000000000 +0100
++++ unzip60_fixed/fileio.c	2021-04-21 15:15:15.000000000 +0100
+@@ -1011,7 +1011,7 @@
+                 ++p;
+             G.didCRlast = FALSE;
+             for (q = transbuf;  (extent)(p-rawbuf) < (extent)size;  ++p) {
+-                if (*p == CR) {           /* lone CR or CR/LF: treat as EOL  */
++                if (*p == 13) {           /* lone CR or CR/LF: treat as EOL  */
+                     PutNativeEOL
+                     if ((extent)(p-rawbuf) == (extent)size-1)
+                         /* last char in buffer */
+@@ -2115,7 +2115,7 @@
+              * (since used before A_TO_N(), check for CR instead of '\r')
+              */
+             while (*p) {
+-                while (*p == CR)
++                while (*p == 13)
+                     ++p;
+                 *q++ = *p++;
+             }
+@@ -2164,7 +2164,7 @@
+                     pause = TRUE;
+                     if (p[1] == LF)        /* ASCII LF */
+                         *q++ = *++p;
+-                    else if (p[1] == CR && p[2] == LF) {  /* ASCII CR LF */
++                    else if (p[1] == 13 && p[2] == LF) {  /* ASCII CR LF */
+                         *q++ = *++p;
+                         *q++ = *++p;
+                     }
+diff -ruN unzip60_old/unzpriv.h unzip60_fixed/unzpriv.h
+--- unzip60_old/unzpriv.h	2021-04-21 15:21:59.000000000 +0100
++++ unzip60_fixed/unzpriv.h	2021-04-21 15:16:31.000000000 +0100
+@@ -1841,7 +1841,7 @@
+ #define HSIZE       (1 << MAX_BITS)    /* size of global work area */
+ 
+ #define LF     10        /* '\n' on ASCII machines; must be 10 due to EBCDIC */
+-#define CR     13        /* '\r' on ASCII machines; must be 13 due to EBCDIC */
++/* skip defining CR 13 due to clash with winnt.h */
+ #define CTRLZ  26        /* DOS & OS/2 EOF marker (used in fileio.c, vms.c) */
+ 
+ #ifdef EBCDIC
+diff -ruN unzip60_old/win32/w32cfg.h unzip60_fixed/win32/w32cfg.h
+--- unzip60_old/win32/w32cfg.h	2021-04-21 15:22:14.000000000 +0100
++++ unzip60_fixed/win32/w32cfg.h	2021-04-21 15:16:55.000000000 +0100
+@@ -184,7 +184,7 @@
+ #endif
+ #define DATE_SEPCHAR  dateseparator()
+ #define lenEOL        2
+-#define PutNativeEOL  {*q++ = native(CR); *q++ = native(LF);}
++#define PutNativeEOL  {*q++ = native(13); *q++ = native(LF);}
+ 
+ #if (defined(__RSXNT__) && !defined(HAVE_MKTIME))
+ #  define HAVE_MKTIME           /* use mktime() in time conversion routines */

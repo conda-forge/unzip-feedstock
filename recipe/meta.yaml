@@ -8,6 +8,8 @@ package:
 source:
   url: ftp://ftp.info-zip.org/pub/infozip/src/unzip{{ version.replace(".", "") }}.tgz
   sha256: {{ sha256 }}
+  patches:
+   - avoid_cr.patch  # [win]
 
 build:
   number: 3
