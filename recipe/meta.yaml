@@ -21,13 +21,14 @@ build:
    - make -f unix/Makefile CC=$CC prefix="$PREFIX" CF="$CFLAGS -I." LFLAGS1="$LDFLAGS" generic  # [osx]
    - make -f unix/Makefile CC=$CC prefix="$PREFIX" CF="$CFLAGS -I. -DNO_LCHMOD" LFLAGS1="$LDFLAGS" unzips  # [linux]
    - make prefix="$PREFIX" -f unix/Makefile install  # [unix]
-   - nmake -f win32/Makefile CC=$CC prefix="$PREFIX" CF="$CFLAGS -I." LFLAGS1="$LDFLAGS" NOASM=1  # [win]
+   - make -f win32/makefile.gcc CC=$CC prefix="$PREFIX" CF="$CFLAGS -I." LFLAGS1="$LDFLAGS" NOASM=1  # [win]
    - xcopy /y /s *.exe *.dll %LIBRARY_BIN%  # [win]
 
 requirements:
   build:
-    - "{{ compiler('c') }}"
-    - make  # [unix]
+    - {{ compiler('c') }}  # [unix]
+    - {{ compiler('m2w64_c') }}  # [win]
+    - make
 
 test:
   commands:
