@@ -1,0 +1,12 @@
+--- unzip60_old/win32/w32cfg.h	2021-04-22 11:57:23.000000000 +0100
++++ unzip60_fixed/win32/w32cfg.h	2021-04-22 11:58:09.000000000 +0100
+@@ -136,6 +136,9 @@
+ #  define WIN32_LEAN_AND_MEAN
+ #endif
+ 
++/* Force this include when building for conda-forge */
++include <windows.h>
++
+ #if defined(__FILEIO_C)
+ #  ifndef __CYGWIN__
+ #    include <conio.h>
