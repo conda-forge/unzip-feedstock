@@ -5,7 +5,7 @@ package:
   version: {{ version }}
 
 source:
-  url: ftp://ftp.info-zip.org/pub/infozip/src/unzip{{ version.replace(".", "") }}.tgz
+  url: http://deb.debian.org/debian/pool/main/u/unzip/unzip_6.0.orig.tar.gz
   sha256: 036d96991646d0449ed0aa952e4fbe21b476ce994abc276e49d30e686708bd37
   patches:
     # Patches from Debian
@@ -39,12 +39,13 @@ source:
 
 
 build:
-  number: 3
+  number: 4
   skip: True  # [win]
 
 requirements:
   build:
     - "{{ compiler('c') }}"
+    - "{{ stdlib('c') }}"
     - make
 
 test:
