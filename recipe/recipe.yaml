@@ -1,0 +1,45 @@
+schema_version: 1
+
+context:
+  version: "6.0"
+  deb_patchset: 31
+
+package:
+  name: unzip
+  version: ${{ version }}
+
+source:
+  - url: http://deb.debian.org/debian/pool/main/u/unzip/unzip_${{ version }}.orig.tar.gz
+    sha256: 036d96991646d0449ed0aa952e4fbe21b476ce994abc276e49d30e686708bd37
+  - url: http://deb.debian.org/debian/pool/main/u/unzip/unzip_${{ version }}-${{ deb_patchset }}.debian.tar.xz
+    sha256: d7dc23f5254c6711dc05f467e70236cfd50a7931001c6152904474b19f295c38
+
+build:
+  number: 5
+  skip: win
+
+requirements:
+  build:
+    - ${{ compiler('c') }}
+    - ${{ stdlib('c') }}
+    - make
+    - patch
+
+tests:
+  - script:
+      - unzip -h
+      - zipinfo -h
+      - if: linux
+        then: test "$(strings $(which unzip) | grep -ci lchmod)" -eq 0
+
+about:
+  license: LicenseRef-BSD-like
+  license_file: LICENSE
+  summary: simple program for unzipping files
+  homepage: http://www.info-zip.org/
+
+extra:
+  recipe-maintainers:
+    - chrisburr
+    - msarahan
+    - jerowe

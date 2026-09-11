@@ -1,3 +1,9 @@
+set -ex
+
+while read patch; do
+    patch -p1 -i "patches/${patch}"
+done < patches/series
+
 DEFINES="-DUNIX"
 DEFINES="${DEFINES} -DACORN_FTYPE_NFS"
 DEFINES="${DEFINES} -DWILD_STOP_AT_DIR"
